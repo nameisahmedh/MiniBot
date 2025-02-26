@@ -1,0 +1,47 @@
+#id_div__body{
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column; 
+    margin-top: 8vh;
+}
+#id_div__mark{
+    
+    width: 50%; 
+    text-align: center; 
+}
+#id__mark{
+    font-size: 24px; 
+    font-family: Arial, sans-serif; 
+    font-weight: bold; 
+    color: #ff3366;
+    margin-bottom: 16px; 
+    vertical-align: top;
+}
+#id_div__ip_txt{
+    width: max-content;
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 20px; 
+    background-color: lightblue; 
+    color: #333; 
+    text-align: center;
+}
+#id_div__ip_txt *{
+    display: inline;
+}
+#id_div__ip_txt *::-webkit-scrollbar{
+    display: none;
+}
+#ip_txt{
+    width: 60vw !important;
+    height: 20vw !important;
+    resize: none !important;
+}
+#id_div_inputtxt{
+    display: flex;
+    margin: auto;
+    width: 55vw;
+}
+
+
