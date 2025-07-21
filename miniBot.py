@@ -3,17 +3,55 @@ import google.generativeai as genai
 from shiny import ui, reactive , render , App , run_app
 from multiprocessing import Process, freeze_support
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(dotenv_path="c:/Users/Ahmed/OneDrive/Desktop/New folder/MyProjects/PY/MiniBot/.env")
+# ...existing code...
 
 cwd = os.getcwd().replace("\\","/") #current working directory cwd
 
-def server(input,output,session): 
+def server(input, output, session):
     @output
     @render.text
     @reactive.event(input.ip_ab_submit)
     def output_llm_response():
+        api_key = os.environ.get("GEMINI_API_KEY")
+        if not api_key:
+            return "Error: GEMINI_API_KEY not found in environment. Check your .env file."
         prompt_sys = "Give the desired output for the asked input"
-        genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+        genai.configure(api_key=api_key)
+
+        # Show spinner while waiting for response
+        yield '<div class="spinner"></div>'
+
+        # Create the model
+        generation_config = {
+            "temperature": 0.7,
+            "top_p": 0.95,
+            "top_k": 64,
+            "max_output_tokens": 65536,
+            "response_mime_type": "text/plain",
+        }
+
+        model = genai.GenerativeModel(
+            model_name="gemini-2.0-flash-thinking-exp-01-21",
+            generation_config=generation_config,
+            system_instruction=prompt_sys
+        )
+
+        chat_session = model.start_chat(history=[])
+        response = chat_session.send_message(input.ip_txt())
+        op = response.text
+        return op.replace("**", "")
+    
+    @output
+    @render.text
+    @reactive.event(input.ip_ab_submit)
+    def output_llm_response():
+        api_key = os.environ.get("GEMINI_API_KEY")
+        if not api_key:
+            return "Error: GEMINI_API_KEY not found in environment. Check your .env file."
+        prompt_sys = "Give the desired output for the asked input"
+        genai.configure(api_key=api_key)
+# ...existing code...
 
         # Create the model
         generation_config = {
